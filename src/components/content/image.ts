@@ -12,8 +12,8 @@ class Image extends Base<HTMLElement> {
 
     this.title = title;
     this.url = url;
-    this.addTitle();
     this.addURL();
+    this.addTitle();
   }
 
   private addTitle() {
