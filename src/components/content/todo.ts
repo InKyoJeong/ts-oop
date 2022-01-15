@@ -16,14 +16,14 @@ class Todo extends Base<HTMLElement> {
     this.addTodo();
   }
 
-  addTitle() {
+  private addTitle() {
     const todoTitle = this.element.querySelector(
       ".todo"
     )! as HTMLHeadingElement;
     todoTitle.textContent = this.title;
   }
 
-  addTodo() {
+  private addTodo() {
     const todoInput = this.element.querySelector(
       ".todo__checkbox"
     )! as HTMLInputElement;

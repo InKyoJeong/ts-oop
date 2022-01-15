@@ -24,7 +24,7 @@ class PageItem extends Base<HTMLLIElement> implements ItemContainer {
     this.addEvent();
   }
 
-  addEvent() {
+  private addEvent() {
     const closeBtn = this.element.querySelector(".close")! as HTMLButtonElement;
     closeBtn.onclick = () => {
       this.closeListener && this.closeListener();

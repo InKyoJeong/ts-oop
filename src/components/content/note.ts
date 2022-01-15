@@ -16,14 +16,14 @@ class Note extends Base<HTMLElement> {
     this.addBody();
   }
 
-  addTitle() {
+  private addTitle() {
     const noteTitle = this.element.querySelector(
       ".note__title"
     )! as HTMLHeadingElement;
     noteTitle.textContent = this.title;
   }
 
-  addBody() {
+  private addBody() {
     const noteBody = this.element.querySelector(
       ".note__body"
     )! as HTMLParagraphElement;

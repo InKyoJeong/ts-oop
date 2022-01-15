@@ -16,14 +16,14 @@ class Image extends Base<HTMLElement> {
     this.addURL();
   }
 
-  addTitle() {
+  private addTitle() {
     const imageTitle = this.element.querySelector(
       ".image__title"
     )! as HTMLHeadingElement;
     imageTitle.textContent = this.title;
   }
 
-  addURL() {
+  private addURL() {
     const imageElement = this.element.querySelector(
       ".image__thumbnail"
     )! as HTMLImageElement;

@@ -42,7 +42,7 @@ class Modal extends Base<HTMLElement> implements Composable {
   }
 
   addContents(contents: Component) {
-    const body = this.element.querySelector(".modal__body")! as HTMLDivElement;
+    const body = this.element.querySelector("#modal__body")! as HTMLDivElement;
     contents.addTo(body);
   }
 }
