@@ -1,16 +1,16 @@
 import Base, { Component } from "../base.js";
-import { ItemContainer } from "./pageItem.js";
+import { Composable, ItemContainer } from "./pageItem.js";
 
 type ItemContainerConstructor = {
   new (): ItemContainer;
 };
 
-class PageContainer extends Base<HTMLUListElement> {
+class PageContainer extends Base<HTMLUListElement> implements Composable {
   constructor(private itemConstructor: ItemContainerConstructor) {
     super(`<ul class="page"></ul>`);
   }
 
-  addItem(component: Component) {
+  addContents(component: Component) {
     const item = new this.itemConstructor();
     item.addContents(component);
     item.addTo(this.element);

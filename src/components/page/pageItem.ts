@@ -10,7 +10,7 @@ export interface ItemContainer extends Component, Composable {
 
 type OnCloseListener = () => void;
 
-class PageItem extends Base<HTMLLIElement> implements Composable {
+class PageItem extends Base<HTMLLIElement> implements ItemContainer {
   private closeListener?: OnCloseListener;
 
   constructor() {
