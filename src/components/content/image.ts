@@ -2,7 +2,10 @@ import Base from "../base.js";
 
 class Image extends Base<HTMLElement> {
   constructor() {
-    super(`<p>image</p>`);
+    super(`<section class="image">
+            <div class="image__holder"><img class="image__thumbnail" /></div>
+            <p class="image__title"></p>
+           </section>`);
   }
 }
 

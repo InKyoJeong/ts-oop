@@ -1,4 +1,8 @@
-class Base<T extends HTMLElement> {
+export interface Component {
+  addTo(parent: HTMLElement): void;
+}
+
+class Base<T extends HTMLElement> implements Component {
   protected readonly element: T;
 
   constructor(htmlTemplate: string) {

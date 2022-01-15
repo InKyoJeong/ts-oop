@@ -1,7 +1,12 @@
 :root {
   --bg-header-color: #a25a5a80;
+  --bg-body-color: rgb(77, 75, 75);
 }
 
 header {
   background-color: var(--bg-header-color);
+}
+
+body {
+  background-color: var(--bg-body-color);
 }
