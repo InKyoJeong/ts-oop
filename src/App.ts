@@ -1,4 +1,4 @@
-import PageContainer from "./components/page/pageContainer.js";
+import PageContainer from "./components/page/index.js";
 import PageItem from "./components/page/pageItem.js";
 import Image from "./components/content/image.js";
 import Note from "./components/content/note.js";

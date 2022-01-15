@@ -14,6 +14,9 @@ class PageContainer extends Base<HTMLUListElement> {
     const item = new this.itemConstructor();
     item.addContents(component);
     item.addTo(this.element);
+    item.setOnCloseListener(() => {
+      item.removeFrom(this.element);
+    });
   }
 }
 
