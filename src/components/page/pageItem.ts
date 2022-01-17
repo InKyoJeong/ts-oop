@@ -6,15 +6,22 @@ export interface Composable {
 
 export interface ItemContainer extends Component, Composable {
   setOnCloseListener(listener: OnCloseListener): void;
+  setOnDragStateListener(listener: OnDragStateListener<ItemContainer>): void;
 }
 
+export type DragState = "start" | "stop" | "leave" | "enter";
 type OnCloseListener = () => void;
+type OnDragStateListener<T extends Component> = (
+  target: T,
+  state: DragState
+) => void;
 
 class PageItem extends Base<HTMLLIElement> implements ItemContainer {
   private closeListener?: OnCloseListener;
+  private dragStateListener?: OnDragStateListener<PageItem>;
 
   constructor() {
-    super(`<li class="page-item">
+    super(`<li class="page-item" draggable='true'>
             <section class="page-item__body"></section>
             <div class="page-item__controls">
               <button class="close">&times;</button>
@@ -29,6 +36,55 @@ class PageItem extends Base<HTMLLIElement> implements ItemContainer {
     closeBtn.onclick = () => {
       this.closeListener && this.closeListener();
     };
+
+    this.addDragStartEvent();
+    this.addDragEndEvent();
+    this.addDragEnterEvent();
+    this.addDragLeaveEvent();
+  }
+
+  private addDragStartEvent() {
+    this.element.addEventListener("dragstart", (e: DragEvent) =>
+      this.onDragStart(e)
+    );
+  }
+
+  private addDragEndEvent() {
+    this.element.addEventListener("dragend", (e: DragEvent) => {
+      this.onDragEnd(e);
+    });
+  }
+
+  private addDragEnterEvent() {
+    this.element.addEventListener("dragenter", (e: DragEvent) =>
+      this.onDragEnter(e)
+    );
+  }
+
+  private addDragLeaveEvent() {
+    this.element.addEventListener("dragleave", (e: DragEvent) => {
+      this.onDragLeave(e);
+    });
+  }
+
+  private onDragStart(_: DragEvent) {
+    this.notifyDragObservers("start");
+  }
+
+  private onDragEnd(_: DragEvent) {
+    this.notifyDragObservers("stop");
+  }
+
+  private onDragEnter(_: DragEvent) {
+    this.notifyDragObservers("enter");
+  }
+
+  private onDragLeave(_: DragEvent) {
+    this.notifyDragObservers("leave");
+  }
+
+  notifyDragObservers(state: DragState) {
+    this.dragStateListener && this.dragStateListener(this, state);
   }
 
   addContents(itemContents: Component) {
@@ -40,6 +96,10 @@ class PageItem extends Base<HTMLLIElement> implements ItemContainer {
 
   setOnCloseListener(listener: OnCloseListener) {
     this.closeListener = listener;
+  }
+
+  setOnDragStateListener(listener: OnDragStateListener<PageItem>) {
+    this.dragStateListener = listener;
   }
 }
 
