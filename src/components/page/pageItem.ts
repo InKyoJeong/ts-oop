@@ -7,6 +7,8 @@ export interface Composable {
 export interface ItemContainer extends Component, Composable {
   setOnCloseListener(listener: OnCloseListener): void;
   setOnDragStateListener(listener: OnDragStateListener<ItemContainer>): void;
+  muteChildren(state: "mute" | "unmute"): void;
+  getBoundingRect(): DOMRect;
 }
 
 export type DragState = "start" | "stop" | "leave" | "enter";
@@ -28,19 +30,22 @@ class PageItem extends Base<HTMLLIElement> implements ItemContainer {
             </div>
            </li>`);
 
-    this.addEvent();
+    this.addEvents();
   }
 
-  private addEvent() {
-    const closeBtn = this.element.querySelector(".close")! as HTMLButtonElement;
-    closeBtn.onclick = () => {
-      this.closeListener && this.closeListener();
-    };
-
+  private addEvents() {
+    this.addCloseEvent();
     this.addDragStartEvent();
     this.addDragEndEvent();
     this.addDragEnterEvent();
     this.addDragLeaveEvent();
+  }
+
+  private addCloseEvent() {
+    const closeBtn = this.element.querySelector(".close")! as HTMLButtonElement;
+    closeBtn.onclick = () => {
+      this.closeListener && this.closeListener();
+    };
   }
 
   private addDragStartEvent() {
@@ -100,6 +105,18 @@ class PageItem extends Base<HTMLLIElement> implements ItemContainer {
 
   setOnDragStateListener(listener: OnDragStateListener<PageItem>) {
     this.dragStateListener = listener;
+  }
+
+  muteChildren(state: "mute" | "unmute"): void {
+    if (state === "mute") {
+      this.element.classList.add("mute-children");
+    } else {
+      this.element.classList.remove("mute-children");
+    }
+  }
+
+  getBoundingRect(): DOMRect {
+    return this.element.getBoundingClientRect();
   }
 }
 

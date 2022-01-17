@@ -1,6 +1,7 @@
 export interface Component {
-  addTo(parent: HTMLElement): void;
+  addTo(parent: HTMLElement, position?: InsertPosition): void;
   removeFrom(parent: HTMLElement): void;
+  attach(component: Component, position?: InsertPosition): void;
 }
 
 class Base<T extends HTMLElement> implements Component {
@@ -12,8 +13,8 @@ class Base<T extends HTMLElement> implements Component {
     this.element = template.content.firstElementChild! as T;
   }
 
-  addTo(parent: HTMLElement) {
-    parent.append(this.element);
+  addTo(parent: HTMLElement, position: InsertPosition = "afterbegin") {
+    parent.insertAdjacentElement(position, this.element);
   }
 
   removeFrom(parent: HTMLElement) {
@@ -21,6 +22,10 @@ class Base<T extends HTMLElement> implements Component {
       throw new Error("Parent mismatch");
     }
     parent.removeChild(this.element);
+  }
+
+  attach(component: Component, position?: InsertPosition): void {
+    component.addTo(this.element, position);
   }
 }
 

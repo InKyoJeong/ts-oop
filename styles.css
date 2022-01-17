@@ -44,3 +44,7 @@ dialog {
   padding: 1em;
   background-color: var(--bg-modal-color);
 }
+
+.mute-children * {
+  pointer-events: none;
+}
